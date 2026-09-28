@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Gestión de Vacaciones";
+}
+
+<div class="container mt-5">
+    <div class="row text-start">
+        <!-- Tarjeta de Saldo de Días -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow border-0 bg-primary text-white text-center p-4">
+                <div class="card-body">
+                    <h5 class="card-title text-uppercase font-weight-bold"> @ViewBag.NombreEmpleado</h5>
+                    <p class="card-text mb-2">Resumen de días de descanso</p>
+                    <hr class="bg-white opacity-25" />
+                    <h1 class="display-3 font-weight-bold my-3">@ViewBag.DiasDisponibles</h1>
+                    <p class="lead mb-0">Días Disponibles</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulario de Solicitud -->
+        <div class="col-md-8">
+            <div class="card shadow border-0 p-4 rounded-3 text-start">
+                <h3 class="text-secondary mb-4"> Solicitar Días Libres</h3>
+
+                @if (TempData["Mensaje"] != null)
+                {
+                    <div class="alert alert-success" role="alert">
+                        <strong> ¡Éxito!</strong> @TempData["Mensaje"]
+                    </div>
+                }
+                @if (TempData["Error"] != null)
+                {
+                    <div class="alert alert-danger" role="alert">
+                        <strong> Atención:</strong> @TempData["Error"]
+                    </div>
+                }
+
+                <form asp-action="SolicitarVacaciones" method="post">
+                    <div class="row text-start">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label font-weight-bold text-dark"> Fecha de Inicio</label>
+                            <input type="date" name="fechaInicio" class="form-control" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label font-weight-bold text-dark"> Fecha de Finalización</label>
+                            <input type="date" name="fechaFin" class="form-control" required />
+                        </div>
+                    </div>
+
+                    <div class="mb-4 text-start">
+                        <label class="form-label font-weight-bold text-dark"> Comentarios</label>
+                        <textarea name="comentarios" class="form-control" rows="3" placeholder="Ej. Vacaciones anuales..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg px-5 rounded-pill shadow-sm">
+                         Enviar Solicitud
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

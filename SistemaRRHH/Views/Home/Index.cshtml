@@ -1,0 +1,88 @@
+﻿@{
+    ViewData["Title"] = "Panel Principal - Sistema RRHH";
+}
+
+<div class="container mt-5 text-center">
+    <div class="jumbotron bg-light p-5 rounded shadow-sm">
+        <h1 class="display-4 text-primary fw-bold"> ¡Bienvenido al Sistema de RRHH!</h1>
+        <p class="lead text-muted mt-2">Hola, @User.Identity?.Name. Selecciona el módulo al que deseas acceder a continuación.</p>
+        <hr class="my-4">
+
+        <!-- 👥 PANEL VISUAL EXCLUSIVO PARA EL EMPLEADO COMÚN -->
+        @if (!User.IsInRole("Admin"))
+        {
+            <div class="row justify-content-center mt-4">
+                <!-- Tarjeta de Asistencia Empleado -->
+                <div class="col-md-5 m-3">
+                    <div class="card h-100 shadow-sm border-success">
+                        <div class="card-body d-flex flex-column justify-content-between p-4">
+                            <div>
+                                <h3 class="card-title text-success fw-bold"> Control de Asistencia</h3>
+                                <p class="card-text text-muted mt-2">Registra tu hora de entrada y salida laboral diariamente en tiempo real.</p>
+                            </div>
+                            <a href="/Asistencia" class="btn btn-success btn-lg w-100 mt-4 fw-bold">Ingresar al Reloj Checador</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta de Vacaciones Empleado -->
+                <div class="col-md-5 m-3">
+                    <div class="card h-100 shadow-sm border-info">
+                        <div class="card-body d-flex flex-column justify-content-between p-4">
+                            <div>
+                                <h3 class="card-title text-info fw-bold"> Gestión de Vacaciones</h3>
+                                <p class="card-text text-muted mt-2">Consulta tus días disponibles y solicita tus periodos de descanso en la empresa.</p>
+                            </div>
+                            <a href="/Vacaciones" class="btn btn-info text-white btn-lg w-100 mt-4 fw-bold">Ver Mis Vacaciones</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <!-- 👑 PANEL VISUAL EXCLUSIVO PARA EL ADMINISTRADOR (JEFE RRHH) -->
+            <div class="row justify-content-center mt-4">
+                <!-- Tarjeta 1: Aprobaciones -->
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm border-warning">
+                        <div class="card-body d-flex flex-column justify-content-between p-4">
+                            <div>
+                                <h4 class="card-title text-warning fw-bold"> Validar Vacaciones</h4>
+                                <p class="card-text text-muted small mt-2">Revisa, aprueba o rechaza las solicitudes pendientes hechas por tus colaboradores.</p>
+                            </div>
+                            <a href="/Admin/Vacaciones" class="btn btn-warning text-dark w-100 mt-3 fw-bold shadow-sm">Ir a Aprobaciones</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 2: Gestión de Personal -->
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm border-primary">
+                        <div class="card-body d-flex flex-column justify-content-between p-4">
+                            <div>
+                                <h4 class="card-title text-primary fw-bold"> Registro de Personal</h4>
+                                <p class="card-text text-muted small mt-2">Da de alta nuevos trabajadores y visualiza el listado completo de la planilla activa.</p>
+                            </div>
+                            <a href="/Admin/Empleados" class="btn btn-primary w-100 mt-3 fw-bold shadow-sm">Gestionar Empleados</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 3: Monitoreo de Asistencias Globales -->
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm border-secondary">
+                        <div class="card-body d-flex flex-column justify-content-between p-4">
+                            <div>
+                                <h4 class="card-title text-secondary fw-bold"> Auditoría de Tiempos</h4>
+                                <p class="card-text text-muted small mt-2">Supervisa las bitácoras de asistencia globales y las horas laboradas de toda la empresa.</p>
+                            </div>
+                            <a href="/Admin/HistorialAsistencias" class="btn btn-secondary w-100 mt-3 fw-bold shadow-sm">Auditar Asistencias</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

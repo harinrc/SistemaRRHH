@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Reloj Checador";
+    var asistencia = ViewBag.AsistenciaHoy as SistemaRRHH.Models.Asistencias;
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <div class="card shadow p-5 border-0 rounded-3">
+                <h3 class="text-primary mb-3"> Control Horario</h3>
+                <h2 class="display-3 text-dark mb-4" id="reloj">00:00:00</h2>
+                <p class="text-muted">Fecha: @DateTime.Today.ToString("dd/MM/yyyy")</p>
+                
+                @if (asistencia == null)
+                {
+                    <!-- Si no ha marcado entrada -->
+                    <form asp-action="MarcarEntrada" method="post">
+                        <button type="submit" class="btn btn-success btn-lg w-100 rounded-pill shadow-sm py-3"> Marcar Entrada</button>
+                    </form>
+                }
+                else if (asistencia.HoraSalida == null)
+                {
+                    <!-- Si ya marcó entrada pero le falta la salida -->
+                    <form asp-action="MarcarSalida" method="post">
+                        <button type="submit" class="btn btn-danger btn-lg w-100 rounded-pill shadow-sm py-3"> Marcar Salida</button>
+                    </form>
+                    <div class="alert alert-info mt-4">
+                        Entrada registrada a las: <strong>@asistencia.HoraEntrada.ToString("hh:mm tt")</strong>
+                    </div>
+                }
+                else
+                {
+                    <!-- Si ya terminó su turno diario -->
+                    <div class="alert alert-success mt-4">
+                        <h5> ¡Jornada terminada con éxito!</h5>
+                        <p class="mb-0">Gracias por registrar tu asistencia el día de hoy.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Mantiene el reloj avanzando en pantalla segundo a segundo
+        setInterval(() => {
+            document.getElementById('reloj').innerText = new Date().toLocaleTimeString();
+        }, 1000);
+    </script>
+}

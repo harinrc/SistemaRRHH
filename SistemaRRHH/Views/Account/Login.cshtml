@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Iniciar Sesión";
+    Layout = "_Layout"; 
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card shadow border-0 rounded-3 p-4">
+                <div class="card-body text-center">
+                    <h2 class="text-primary font-weight-bold mb-3"> Sistema RRHH</h2>
+                    <p class="text-muted mb-4">Ingresa tus credenciales para acceder</p>
+
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger py-2" role="alert">
+                             @ViewBag.Error
+                        </div>
+                    }
+
+                    <form asp-action="Login" method="post" class="text-start">
+                        <div class="mb-3">
+                            <label class="form-label font-weight-bold text-dark"> Correo Electrónico</label>
+                            <input type="email" name="email" class="form-control form-control-lg" placeholder="ejemplo@empresa.com" required />
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label font-weight-bold text-dark"> Contraseña</label>
+                            <input type="password" name="password" class="form-control form-control-lg" placeholder="••••••••" required />
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill shadow-sm">
+                            Ingresar al Sistema
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
