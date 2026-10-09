@@ -1,0 +1,34 @@
+name: Desplegar en MonsterASP.NET
+
+on:
+  push:
+    branches: [ "master", "main" ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Descargar código
+      uses: actions/checkout@v4
+
+    - name: Configurar .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.x'
+
+    - name: Restaurar dependencias
+      run: dotnet restore SistemaRRHH/SistemaRRHH.csproj
+
+    - name: Compilar y Publicar
+      run: dotnet publish SistemaRRHH/SistemaRRHH.csproj -c Release -o ./publish
+
+    - name: Subir archivos a MonsterASP.NET vía FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: ./publish/
+        server-dir: /site/wwwroot/
+
